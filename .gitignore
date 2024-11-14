@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/src/.wwebjs_cache
+/src/app/connection/session
 /.pnp
 .pnp.js
 
