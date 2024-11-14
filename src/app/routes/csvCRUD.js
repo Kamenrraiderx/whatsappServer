@@ -6,7 +6,7 @@ const {deleteUser,addUser,getUsers,updateUser} = require("../controllers/csvCRUD
 
 router.post('/add-row',addUser);
 router.put('/update-row',updateUser);
-router.delete('/delete-row',deleteUser)
+router.delete('/delete-row/:Phone',deleteUser)
 router.get('/getAll',getUsers);
 
 module.exports = router

@@ -1,5 +1,6 @@
 const { csvParser } = require("./csv-parser");
 const cron = require('node-cron');
+const convertToCronFormat = require("./dateConvert");
 const loadJobs = async (scheduledJobs,client) => {
     try {
         console.log("prueba 1")
@@ -19,7 +20,7 @@ const loadJobs = async (scheduledJobs,client) => {
             const jobKey = `${Phone}-${sendDate}`;
             // Only schedule job if sendMessage is true
             if (sendMessage) {
-                const job = cron.schedule(sendDate, () => {
+                const job = cron.schedule(convertToCronFormat(sendDate) , () => {
                     const message = `Hello ${Name}, this is your scheduled message!`;
                     client.sendMessage(chatId, message)
                         .then(response => {

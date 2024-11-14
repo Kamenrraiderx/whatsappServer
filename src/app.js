@@ -7,7 +7,7 @@ import loadJobs from './app/utils/loadJobs.js';
 import clientConnection from './app/connection/whatsappClient.js';
 
 const app = express();
-const port = 3000;
+const port = 4000;
 const scheduledJobs = new Map();
 let client = await clientConnection()
 
@@ -37,10 +37,6 @@ cron.schedule('0 0 1 * *', async () => {
     console.log('Resetting jobs on the first of the month');
     await loadJobs(scheduledJobs);
 });
-
-
-
-
 
 
 // Start Express server to handle routes (for example, triggering message sending)

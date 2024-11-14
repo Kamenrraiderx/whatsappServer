@@ -4,14 +4,14 @@ const { writeCsvData } = require("../utils/writeCsvData");
 
 const deleteUser = async (req, res) => {
     try {
-        const { Phone,sendDate } = req.body;  // Identify user by Phone
-        const jobKey = `${Phone}-${sendDate}`;
+        const { Phone } = req.params; 
+        const jobKey = `${Phone}`;
         req.scheduledJobs.get(jobKey).stop();
         req.scheduledJobs.delete(jobKey);
         let users = await csvParser();
         const initialLength = users.length;
         // Filter out the user with the specified phone number
-        users = users.filter(user => user.Phone !== Phone && user.sendDate !== sendDate);
+        users = users.filter(user => user.Phone !== Phone);
 
         if (users.length === initialLength) {
             return res.status(404).json({ error: 'User not found.' });
@@ -32,7 +32,7 @@ const addUser = async (req, res) => {
         users.push(req.body);  // Add new user data from request body
         await writeCsvData(users);
         loadJobs(req.scheduledJobs,req.client)
-        res.json({ message: 'Row added successfully!' });
+        res.json({ message: 'Row added successfully!',user:req.body });
     } catch (err) {
         res.status(500).json({ error: 'Failed to add row.' });
         console.log(err)
@@ -42,7 +42,7 @@ const addUser = async (req, res) => {
 const getUsers = async (req, res) => {
     try {
         let users = await csvParser();
-        res.json({ message: users });
+        res.json({  users });
     } catch (err) {
         console.log(err)
         res.status(500).json({ error: 'Failed to send users.' });
