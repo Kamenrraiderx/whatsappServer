@@ -1,3 +1,4 @@
-Name,Phone,sendDate,sendMessage
-Anibal Reyes,5043368000,2024-11-14T16:34,true
-Nuevo usuario prueba,50433680080,2024-11-14T15:46,false
+id,Name,Phone,sendDate,activeSend
+0,Cliente1 ,50433680080,2024-11-15T01:06,true
+1,Cliente 2,50433680080,2024-11-15T11:52,true
+2,CLiente3,50433680080,2024-11-15T13:29,true

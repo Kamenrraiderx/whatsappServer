@@ -3,7 +3,7 @@ import path  from 'path';
 import csv  from 'csv-parser';
 
 const __dirname = new URL('.', import.meta.url).pathname;
-export async function  csvParser(){
+export default async function  csvParser(){
     return new Promise((resolve, reject) => {
         const filePath = path.join(__dirname, '..', '..', '..', 'public', 'docs', 'users.csv');
         const rows = [];
@@ -11,7 +11,9 @@ export async function  csvParser(){
         fs.createReadStream(filePath)
             .pipe(csv())
             .on('data', (row) => {
-                rows.push(row); // Add each row to the array
+                console.log("Active send parse:",row.activeSend =='true')
+                console.log("Active no parse",row.activeSend =='true')
+                rows.push({...row,activeSend:row.activeSend =='true'}); // Add each row to the array
             })
             .on('end', () => {
                 console.log('CSV file successfully processed');

@@ -33,6 +33,12 @@ function clientConnection() {
             console.log('Escanea el código QR para iniciar sesión.');
             qrcode.generate(qr, { small: true });
         });
+
+        client.on('message', async (message) => {
+            if (message.body === 'Ver detalles') {
+              await client.sendMessage(message.from, 'Aquí están los detalles de tu cobro...');
+            }
+        });
         client.on('message_create', message => {
             console.log(message.body);
         

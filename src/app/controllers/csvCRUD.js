@@ -1,17 +1,17 @@
-const { csvParser } = require("../utils/csv-parser");
-const loadJobs = require("../utils/loadJobs");
-const { writeCsvData } = require("../utils/writeCsvData");
+import csvParser  from "../utils/csv-parser.js";
+import loadJobs from "../utils/loadJobs.js";
+import  writeCsvData  from "../utils/writeCsvData.js";
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
     try {
-        const { Phone } = req.params; 
-        const jobKey = `${Phone}`;
+        const { id } = req.params; 
+        const jobKey = `${id}`;
         req.scheduledJobs.get(jobKey).stop();
         req.scheduledJobs.delete(jobKey);
         let users = await csvParser();
         const initialLength = users.length;
         // Filter out the user with the specified phone number
-        users = users.filter(user => user.Phone !== Phone);
+        users = users.filter(user => user.id !== id);
 
         if (users.length === initialLength) {
             return res.status(404).json({ error: 'User not found.' });
@@ -26,20 +26,21 @@ const deleteUser = async (req, res) => {
 };
 
 // Route to add a new row
-const addUser = async (req, res) => {
+export const addUser = async (req, res) => {
     try {
         let users = await csvParser();
-        users.push(req.body);  // Add new user data from request body
+        const maxId = Math.max(...users.map(user => parseInt(user.id))) +1;
+        users.push({...req.body,id:maxId,});  // Add new user data from request body
         await writeCsvData(users);
         loadJobs(req.scheduledJobs,req.client)
-        res.json({ message: 'Row added successfully!',user:req.body });
+        res.json({ message: 'Row added successfully!',user:{...req.body,id:maxId,} });
     } catch (err) {
         res.status(500).json({ error: 'Failed to add row.' });
         console.log(err)
     }
 };
 
-const getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
     try {
         let users = await csvParser();
         res.json({  users });
@@ -51,11 +52,12 @@ const getUsers = async (req, res) => {
 
 
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
-        const { ID, ...updatedData } = req.body;  // Identify user by Phone
+        const { id } = req.params; 
+        const {...updatedData } = req.body;  // Identify user by Phone
         const users = await csvParser();
-        const userIndex = users.findIndex(user => user.Phone === ID);
+        const userIndex = users.findIndex(user => user.id === id);
 
         if (userIndex === -1) return res.status(404).json({ error: 'User not found.' });
 
@@ -66,12 +68,4 @@ const updateUser = async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: 'Failed to update row.' });
     }
-};
-
-module.exports = {
-    deleteUser,
-    addUser,
-    getUsers,
-    updateUser
-
 };
