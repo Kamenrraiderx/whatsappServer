@@ -1,8 +1,8 @@
-import csvParser  from "../utils/csv-parser.js";
-import loadJobs from "../utils/loadJobs.js";
-import  writeCsvData  from "../utils/writeCsvData.js";
+const csvParser  = require("../utils/csv-parser.js") ;
+const loadJobs = require("../utils/loadJobs.js") ;
+const  writeCsvData  = require("../utils/writeCsvData.js") ;
 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         const { id } = req.params; 
         const jobKey = `${id}`;
@@ -26,7 +26,7 @@ export const deleteUser = async (req, res) => {
 };
 
 // Route to add a new row
-export const addUser = async (req, res) => {
+const addUser = async (req, res) => {
     try {
         let users = await csvParser();
         const maxId = Math.max(...users.map(user => parseInt(user.id))) +1;
@@ -40,7 +40,7 @@ export const addUser = async (req, res) => {
     }
 };
 
-export const getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
     try {
         let users = await csvParser();
         res.json({  users });
@@ -52,7 +52,7 @@ export const getUsers = async (req, res) => {
 
 
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     try {
         const { id } = req.params; 
         const {...updatedData } = req.body;  // Identify user by Phone
@@ -69,3 +69,10 @@ export const updateUser = async (req, res) => {
         res.status(500).json({ error: 'Failed to update row.' });
     }
 };
+
+module.exports = {
+    addUser,
+    deleteUser,
+    getUsers,
+    updateUser
+}

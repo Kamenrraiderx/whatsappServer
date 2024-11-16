@@ -1,10 +1,9 @@
-import pkg from 'whatsapp-web.js';
-import qrcode from 'qrcode-terminal';
-import path from 'path';
+const pkg = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
+const path = require('path');
 const { Client, LocalAuth } = pkg;
 
-function clientConnection() {
-    const __dirname = new URL('.', import.meta.url).pathname;
+async function clientConnection() {
     const dataSession = path.join(__dirname, 'session');
     console.log(dataSession);
 
@@ -50,4 +49,4 @@ function clientConnection() {
     });
 }
 
-export default clientConnection;
+module.exports = clientConnection;

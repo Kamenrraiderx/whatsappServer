@@ -1,9 +1,8 @@
-import fs from 'fs';
-import path  from 'path';
-import csv  from 'csv-parser';
+const fs = require('fs');
+const path = require('path');
+const csv = require('csv-parser');
 
-const __dirname = new URL('.', import.meta.url).pathname;
-export default async function  csvParser(){
+async function  csvParser(){
     return new Promise((resolve, reject) => {
         const filePath = path.join(__dirname, '..', '..', '..', 'public', 'docs', 'users.csv');
         const rows = [];
@@ -25,3 +24,5 @@ export default async function  csvParser(){
             });
     });
 }
+
+module.exports = csvParser;

@@ -1,8 +1,7 @@
-import { createObjectCsvWriter } from 'csv-writer';
-import path from 'path';
+const { createObjectCsvWriter }  = require('csv-writer');
+const path  = require('path');
 
-const __dirname = new URL('.', import.meta.url).pathname;
-export default async function writeCsvData(data) {
+ async function writeCsvData(data) {
     const filePath = path.join(__dirname, '..', '..', '..', 'public', 'docs', 'users.csv');
     const csvWriter = createObjectCsvWriter({
         path: filePath,
@@ -10,3 +9,5 @@ export default async function writeCsvData(data) {
     });
     await csvWriter.writeRecords(data);
 };
+
+module.exports = writeCsvData;

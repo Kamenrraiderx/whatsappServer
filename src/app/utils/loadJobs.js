@@ -1,13 +1,12 @@
-import csvParser from "./csv-parser.js";
-import cron from 'node-cron';
-import convertToCronFormat from "./dateConvert.js";
-import path from 'path';
-import pkg from 'whatsapp-web.js';
-import fs from 'fs';
+const csvParser = require("./csv-parser.js");
+const cron = require('node-cron');
+const convertToCronFormat = require("./dateConvert.js");
+const path = require('path');
+const pkg = require('whatsapp-web.js');
+const fs = require('fs');
 const { MessageMedia } = pkg;
-export default async function loadJobs(scheduledJobs, client) {
+async function loadJobs(scheduledJobs, client) {
     try {
-        const __dirname = new URL('.', import.meta.url).pathname;
         const filePath = path.join(__dirname, '..', '..', '..', 'public', 'images', 'bus.jpg');
         console.log("prueba 1")
 
@@ -62,4 +61,4 @@ export default async function loadJobs(scheduledJobs, client) {
     }
 
 };
-
+ module.exports = loadJobs;
