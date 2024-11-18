@@ -78,7 +78,7 @@ ${overdueMessage}
         // Enviar el mensaje
         client.sendMessage(chatId, message)
             .then((response) => {
-                console.log(`Resumen enviado a ${chatId}:`, response);
+                console.log(`Resumen enviado a ${chatId}`);
             }).catch(err => {
                 console.error(`Error enviando el resumen a ${chatId}:`, err);
             });
@@ -97,8 +97,8 @@ ${overdueMessage}
 
 
     // Inicia el servidor Express
-    app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
+    app.listen(port,'0.0.0.0', () => {
+        console.log(`Server running at http://0.0.0.0:${port}`);
     });
 }
 
