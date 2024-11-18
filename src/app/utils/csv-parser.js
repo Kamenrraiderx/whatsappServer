@@ -10,12 +10,9 @@ async function  csvParser(){
         fs.createReadStream(filePath)
             .pipe(csv())
             .on('data', (row) => {
-                console.log("Active send parse:",row.activeSend =='true')
-                console.log("Active no parse",row.activeSend =='true')
                 rows.push({...row,activeSend:row.activeSend =='true'}); // Add each row to the array
             })
             .on('end', () => {
-                console.log('CSV file successfully processed');
                 resolve(rows); // Resolve with the filled array after processing
             })
             .on('error', (err) => {

@@ -5,7 +5,6 @@ const { Client, LocalAuth } = pkg;
 
 async function clientConnection() {
     const dataSession = path.join(__dirname, 'session');
-    console.log(dataSession);
 
     const client = new Client({
         authStrategy: new LocalAuth({
@@ -39,7 +38,7 @@ async function clientConnection() {
             }
         });
         client.on('message_create', message => {
-            console.log(message.body);
+            //console.log(message.body);
         
             if (message.body === '!ping') {
                 message.reply('pong');
