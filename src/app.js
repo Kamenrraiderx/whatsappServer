@@ -22,7 +22,7 @@ async function startApp() {
         req.client = client;
         res.setHeader(
             "Content-Security-Policy",
-            "default-src 'self'; img-src 'self'; script-src 'self'; style-src 'self';"
+            "default-src *; img-src *; script-src 'self'; style-src 'self';"
         );
         next();
     });
