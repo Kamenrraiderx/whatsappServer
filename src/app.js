@@ -20,6 +20,10 @@ async function startApp() {
     app.use((req, res, next) => {
         req.scheduledJobs = scheduledJobs;
         req.client = client;
+        res.setHeader(
+            "Content-Security-Policy",
+            "default-src 'self'; img-src 'self'; script-src 'self'; style-src 'self';"
+        );
         next();
     });
 
@@ -97,7 +101,7 @@ ${overdueMessage}
 
 
     // Inicia el servidor Express
-    app.listen(port,'0.0.0.0', () => {
+    app.listen(port, '0.0.0.0', () => {
         console.log(`Server running at http://0.0.0.0:${port}`);
     });
 }
