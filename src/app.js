@@ -3,6 +3,7 @@ const cron = require('node-cron');
 const bodyParser = require('body-parser');
 const configCors = require('./config/cors.js');
 const csvCRUDRoutes = require('./app/routes/csvCRUD.js');
+const cors = require('cors');
 const loadJobs = require('./app/utils/loadJobs.js');
 const clientConnection = require('./app/connection/whatsappClient.js');
 const csvParser = require('./app/utils/csv-parser.js');
@@ -27,7 +28,9 @@ async function startApp() {
         next();
     });
 
-    app.use(configCors);
+    app.use(cors({
+        origin:'https://ena-trasportes.vercel.app'
+    }));
     app.use(express.static('./public'));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
