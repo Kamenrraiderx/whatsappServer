@@ -7,9 +7,9 @@ const loadJobs = require('./app/utils/loadJobs.js');
 const clientConnection = require('./app/connection/whatsappClient.js');
 const csvParser = require('./app/utils/csv-parser.js');
 const writeCsvData = require('./app/utils/writeCsvData.js');
-
+require('dotenv').config();
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4000;
 const scheduledJobs = new Map();
 // Define una función asincrónica para inicializar la aplicación
 async function startApp() {
