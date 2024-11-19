@@ -3,6 +3,7 @@ const cron = require('node-cron');
 const bodyParser = require('body-parser');
 const configCors = require('./config/cors.js');
 const csvCRUDRoutes = require('./app/routes/csvCRUD.js');
+const testRoutes = require('./app/routes/testRoutes.js');
 const cors = require('cors');
 const loadJobs = require('./app/utils/loadJobs.js');
 const clientConnection = require('./app/connection/whatsappClient.js');
@@ -38,6 +39,7 @@ async function startApp() {
     app.set('view engine', 'ejs');
 
     app.use('/v1', csvCRUDRoutes);
+    app.use('/v1', testRoutes);
     app.use(express.static('./public'));
 
     loadJobs(scheduledJobs, client);
